@@ -167,7 +167,7 @@ class SportsPerformancePredictor:
         
         # Data Overview
         st.subheader("🔍 Vista General de los Datos")
-        st.dataframe(self.data.head(10), use_container_width=True)
+        st.dataframe(self.data.head(100), use_container_width=True)
         
         # Data Types and Missing Values
         col1, col2 = st.columns(2)
