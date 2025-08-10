@@ -1,7 +1,3 @@
-!pip install streamlit
-!pip install scikit-posthocs
-!pip install reportlab
-
 import streamlit as st
 import pandas as pd
 import numpy as np
