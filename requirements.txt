@@ -6,3 +6,4 @@ matplotlib
 seaborn
 scikit-posthocs
 plotly
+reportlab
