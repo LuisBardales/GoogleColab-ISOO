@@ -6,6 +6,3 @@ matplotlib
 seaborn
 scikit-posthocs
 plotly
-plotly.express
-plotly.graph_objects
-plotly.subplots
