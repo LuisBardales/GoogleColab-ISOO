@@ -900,6 +900,11 @@ def main():
     - 📈 Visualizaciones interactivas
     - 📄 Reporte PDF profesional
     """)
+
+    st.markdown("""
+    ---
+    **Nota:** Coloca tu archivo `datasport.csv` en el mismo directorio que esta aplicación, o usa la opción de carga de archivos en la barra lateral.
+    """)
     
     # Initialize predictor
     predictor = SportsPerformancePredictor()
@@ -1017,35 +1022,6 @@ def main():
     """)
 
 # Instructions for running the app
-st.markdown("""
----
-### 🚀 Instrucciones de Uso
-
-**Para ejecutar esta aplicación:**
-
-1. **En Google Colab:**
-   ```python
-   !pip install streamlit plotly scikit-posthocs reportlab
-   !streamlit run app.py --server.port 8501 --server.address 0.0.0.0
-   ```
-
-2. **En local:**
-   ```bash
-   pip install streamlit pandas numpy matplotlib seaborn plotly scikit-learn scipy scikit-posthocs reportlab
-   streamlit run app.py
-   ```
-
-3. **Dependencias principales:**
-   - streamlit
-   - pandas, numpy
-   - matplotlib, seaborn, plotly
-   - scikit-learn
-   - scipy
-   - scikit-posthocs
-   - reportlab
-
-**Nota:** Coloca tu archivo `datasport.csv` en el mismo directorio que esta aplicación, o usa la opción de carga de archivos en la barra lateral.
-""")
 
 if __name__ == "__main__":
     main()
