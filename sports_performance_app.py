@@ -19,7 +19,7 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 from sklearn.impute import SimpleImputer
 
-# Statistical Tests
+# Pruebas Estadisticas
 from scipy import stats
 from scipy.stats import shapiro, levene, f_oneway, kruskal
 import scikit_posthocs as sp
