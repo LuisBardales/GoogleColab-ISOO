@@ -9,7 +9,7 @@ from plotly.subplots import make_subplots
 import warnings
 warnings.filterwarnings('ignore')
 
-# Machine Learning Libraries
+# Librerias de Machine Learning
 from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, VotingRegressor
@@ -24,7 +24,7 @@ from scipy import stats
 from scipy.stats import shapiro, levene, f_oneway, kruskal
 import scikit_posthocs as sp
 
-# PDF Report
+# Reporte PDF
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image
@@ -33,7 +33,7 @@ from reportlab.lib.units import inch
 import io
 import base64
 
-# Configuration
+# Configuración
 st.set_page_config(
     page_title="Predictor de Rendimiento Deportivo",
     page_icon="🏃‍♂️",
@@ -41,7 +41,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS
+# Diseño CSS
 st.markdown("""
 <style>
     .main-header {
