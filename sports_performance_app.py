@@ -98,7 +98,7 @@ class PredictorRendimientoDeportivo:
                     'Athlete_ID': [f'A{i:03d}' for i in range(1, n_pruebas+1)],
                     'Athlete_Name': [f'Athlete_{i}' for i in range(1, n_pruebas+1)],
                     'Sport_Type': np.random.choice(deportes, n_pruebas),
-                    'Event': np.random.choice(events, n_pruebas),
+                    'Event': np.random.choice(eventos, n_pruebas),
                     'Training_Hours_per_Week': np.random.normal(25, 8, n_pruebas),
                     'Average_Heart_Rate': np.random.normal(150, 25, n_pruebas),
                     'BMI': np.random.normal(23, 3, n_pruebas),
