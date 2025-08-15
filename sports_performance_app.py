@@ -915,21 +915,19 @@ def main():
     st.markdown(f"""
     ### 🎯 {textos['subtitulo']}
     
-    Esta aplicación utiliza técnicas avanzadas de inteligencia artificial para predecir el rendimiento 
-    deportivo basándose en múltiples características del atleta. Incluye análisis exploratorio completo, 
-    múltiples algoritmos de ML, evaluación estadística robusta y generación de reportes.
+    {textos['descripcion']}
     
-    **Características principales:**
-    - 📊 Análisis Exploratorio de Datos (EDA) completo
-    - 🤖 Evaluación de 5 algoritmos + 2 modelos híbridos
-    - 🧪 Pruebas estadísticas robustas
-    - 📈 Visualizaciones interactivas
-    - 📄 Reporte PDF profesional
+    **{textos['titulo_caracteristicas_principales']}**
+    - 📊 {textos['caracteristica_1']}
+    - 🤖 {textos['caracteristica_2']}
+    - 🧪 {textos['caracteristica_3']}
+    - 📈 {textos['caracteristica_4']}
+    - 📄 {textos['caracteristica_5']}
     """)
 
-    st.markdown("""
+    st.markdown(f"""
     ---
-    **Nota:** Coloca tu archivo `datasport.csv` en el mismo directorio que esta aplicación, o usa la opción de carga de archivos en la barra lateral.
+    {textos['nota']}
     """)
     
     # Inicializar predictor
