@@ -6,7 +6,7 @@ def cargar_lenguaje(codigo_lenguaje):
 
     """
     try:
-        with open(f'locales/{codigo_lenguaje}.json', 'r', encoding='utf-8') as file:
+        with open(f'lenguaje/{codigo_lenguaje}.json', 'r', encoding='utf-8') as file:
             return json.load(file)
     except FileNotFoundError:
         print(f"Archivo de idioma '{codigo_lenguaje}.json' no encontrado.")

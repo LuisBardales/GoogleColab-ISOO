@@ -886,7 +886,8 @@ def main():
     """Funcion principal para ejecutar la aplicación"""
 
     # Carga idioma por defecto
-    textos = cargar_lenguaje("es")
+    codigos_idioma = "es"
+    textos = cargar_lenguaje(codigos_idioma)
 
     # Opción de idioma    
     codigos_idioma = st.sidebar.selectbox(f'🌍 {textos["seleccion_lenguaje"]}', ["es", "en"], format_func=lambda x: "Español" if x == "es" else "English")
