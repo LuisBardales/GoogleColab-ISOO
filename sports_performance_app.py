@@ -886,7 +886,7 @@ def main():
     """Funcion principal para ejecutar la aplicación"""
     
     # Titulo y descripción
-    st.markdown('<div class="main-header">🏃‍♂️ {textos["titulo"]}</div>', 
+    st.markdown(f'<div class="main-header">🏃‍♂️ {textos["titulo"]}</div>', 
                unsafe_allow_html=True)
     
     st.markdown("""
@@ -916,7 +916,7 @@ def main():
     st.sidebar.title("🚀 Navegación")
 
     # Opción de idioma
-    codigos_idioma = st.sidebar.selectbox("🌍", ["es", "en"], format_func=lambda x: "Español" if x == "es" else "English")
+    codigos_idioma = st.sidebar.selectbox(f"🌍 {textos["seleccion_lenguaje"]}", ["es", "en"], format_func=lambda x: "Español" if x == "es" else "English")
     textos = cargar_lenguaje(codigos_idioma)
     
     # Opción de cargar datos
