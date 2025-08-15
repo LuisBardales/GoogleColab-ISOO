@@ -888,17 +888,13 @@ def main():
     # Carga idioma por defecto
     codigos_idioma = "es"
     textos = cargar_lenguaje(codigos_idioma)
-
-    # Opción de idioma    
-    codigos_idioma = st.sidebar.selectbox(f'🌍 {textos["seleccion_lenguaje"]}', ["es", "en"], format_func=lambda x: "Español" if x == "es" else "English")
-    textos = cargar_lenguaje(codigos_idioma)
     
     # Titulo y descripción
     st.markdown(f'<div class="main-header">🏃‍♂️ {textos["titulo"]}</div>', 
                unsafe_allow_html=True)
     
-    st.markdown("""
-    ### 🎯 Aplicación de Machine Learning para Predicción de Rendimiento Deportivo
+    st.markdown(f"""
+    ### 🎯 {textos['subtitulo']}
     
     Esta aplicación utiliza técnicas avanzadas de inteligencia artificial para predecir el rendimiento 
     deportivo basándose en múltiples características del atleta. Incluye análisis exploratorio completo, 
@@ -921,7 +917,11 @@ def main():
     predictor = PredictorRendimientoDeportivo()
     
     # Barra lateral para navegación
-    st.sidebar.title("🚀 Navegación")    
+    st.sidebar.title(f'🚀 {textos["navegacion"]}')
+
+    # Opción de idioma    
+    codigos_idioma = st.sidebar.selectbox(f'🌍 {textos["seleccion_lenguaje"]}', ["es", "en"], format_func=lambda x: "Español" if x == "es" else "English")
+    textos = cargar_lenguaje(codigos_idioma) 
     
     # Opción de cargar datos
     st.sidebar.subheader("📁 Cargar Datos")
