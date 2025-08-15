@@ -885,8 +885,11 @@ class PredictorRendimientoDeportivo:
 def main():
     """Funcion principal para ejecutar la aplicación"""
 
+    # Carga idioma por defecto
+    textos = cargar_lenguaje("es")
+
     # Opción de idioma    
-    codigos_idioma = st.sidebar.selectbox(f"🌍 {textos["seleccion_lenguaje"]}", ["es", "en"], format_func=lambda x: "Español" if x == "es" else "English")
+    codigos_idioma = st.sidebar.selectbox(f'🌍 {textos["seleccion_lenguaje"]}', ["es", "en"], format_func=lambda x: "Español" if x == "es" else "English")
     textos = cargar_lenguaje(codigos_idioma)
     
     # Titulo y descripción
