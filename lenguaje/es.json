@@ -1,0 +1,22 @@
+{
+    "sports_performance_app": {
+        "titulo": "Predictor de Rendimiento Deportivo",
+        "subtitulo": "Aplicación de Machine Learning para Predicción de Rendimiento Deportivo",
+        "descripcion": "Esta aplicación utiliza técnicas avanzadas de inteligencia artificial para predecir el rendimiento deportivo basándose en múltiples características del atleta. Incluye análisis exploratorio completo, múltiples algoritmos de ML, evaluación estadística robusta y generación de reportes.",
+        "titulo_caracteristicas_principales": "Características Principales",
+        "caracteristica_1": "Análisis Exploratorio de Datos (EDA) Completo",
+        "caracteristica_2": "Evaluación de 5 algoritmos + 2 modelos híbridos",
+        "caracteristica_3": "Pruebas estadísticas robustas",
+        "caracteristica_4": "Visualizaciones interactivas",
+        "caracteristica_5": "Reporte PDF profesional",
+        "nota": "**Nota:** Coloca tu archivo `datasport.csv` en el mismo directorio que esta aplicación, o usa la opción de carga de archivos en la barra lateral.",
+        "cargar_datos": "Cargar Datos",
+        "descripcion_datos": "Sube un archivo CSV con tus datos deportivos.",
+        "entrenamiento_modelo": "Entrenamiento del Modelo",
+        "entrenar_modelo": "Entrenar Modelo",
+        "resultados_modelo": "Resultados del Modelo",
+        "metricas_rendimiento": "Métricas de Rendimiento",
+        "visualizaciones": "Visualizaciones",
+        "seleccion_lenguaje": "Selecciona el Idioma"
+    }
+}

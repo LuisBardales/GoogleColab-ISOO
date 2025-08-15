@@ -9,6 +9,9 @@ from plotly.subplots import make_subplots
 import warnings
 warnings.filterwarnings('ignore')
 
+# Configuracion de Idioma
+from utils.i18n import cargar_lenguaje
+
 # Librerias de Machine Learning
 from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.preprocessing import StandardScaler, LabelEncoder
@@ -883,7 +886,7 @@ def main():
     """Funcion principal para ejecutar la aplicación"""
     
     # Titulo y descripción
-    st.markdown('<div class="main-header">🏃‍♂️ Predictor de Rendimiento Deportivo</div>', 
+    st.markdown('<div class="main-header">🏃‍♂️ {textos["titulo"]}</div>', 
                unsafe_allow_html=True)
     
     st.markdown("""
@@ -911,6 +914,10 @@ def main():
     
     # Barra lateral para navegación
     st.sidebar.title("🚀 Navegación")
+
+    # Opción de idioma
+    codigos_idioma = st.sidebar.selectbox("🌍", ["es", "en"], format_func=lambda x: "Español" if x == "es" else "English")
+    textos = cargar_lenguaje(codigos_idioma)
     
     # Opción de cargar datos
     st.sidebar.subheader("📁 Cargar Datos")
