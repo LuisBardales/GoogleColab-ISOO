@@ -903,7 +903,7 @@ def main():
     # Si cambia el idioma, actualizar y forzar recarga
     if codigos_idioma != st.session_state.codigos_idioma:
         st.session_state.codigos_idioma = codigos_idioma
-        st.experimental_rerun()
+        st.rerun()
 
     # Cargar textos definitivos del idioma elegido
     textos = cargar_lenguaje(st.session_state.codigos_idioma)
