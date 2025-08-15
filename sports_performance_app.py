@@ -884,6 +884,10 @@ class PredictorRendimientoDeportivo:
 
 def main():
     """Funcion principal para ejecutar la aplicación"""
+
+    # Opción de idioma    
+    codigos_idioma = st.sidebar.selectbox(f"🌍 {textos["seleccion_lenguaje"]}", ["es", "en"], format_func=lambda x: "Español" if x == "es" else "English")
+    textos = cargar_lenguaje(codigos_idioma)
     
     # Titulo y descripción
     st.markdown(f'<div class="main-header">🏃‍♂️ {textos["titulo"]}</div>', 
@@ -913,11 +917,7 @@ def main():
     predictor = PredictorRendimientoDeportivo()
     
     # Barra lateral para navegación
-    st.sidebar.title("🚀 Navegación")
-
-    # Opción de idioma
-    codigos_idioma = st.sidebar.selectbox(f"🌍 {textos["seleccion_lenguaje"]}", ["es", "en"], format_func=lambda x: "Español" if x == "es" else "English")
-    textos = cargar_lenguaje(codigos_idioma)
+    st.sidebar.title("🚀 Navegación")    
     
     # Opción de cargar datos
     st.sidebar.subheader("📁 Cargar Datos")
