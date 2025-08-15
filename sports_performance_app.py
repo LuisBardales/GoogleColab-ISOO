@@ -885,13 +885,28 @@ class PredictorRendimientoDeportivo:
 def main():
     """Funcion principal para ejecutar la aplicación"""
 
-    # Carga idioma por defecto
-    codigos_idioma = "es"
-    textos_temp = cargar_lenguaje(codigos_idioma)
+    # Idioma por defecto la primera vez
+    if "codigos_idioma" not in st.session_state:
+        st.session_state.codigos_idioma = "es"
 
-    # Opción de idioma    
-    codigos_idioma = st.sidebar.selectbox(f'🌍 {textos_temp["seleccion_lenguaje"]}', ["es", "en"], format_func=lambda x: "Español" if x == "es" else "English")
-    textos = cargar_lenguaje(codigos_idioma) 
+    # Cargar textos del idioma actual
+    textos = cargar_lenguaje(st.session_state.codigos_idioma)
+
+    # Mostrar selector con traducción actual
+    codigos_idioma = st.sidebar.selectbox(
+        f"🌍 {textos['seleccion_lenguaje']}",
+        ["es", "en"],
+        index=["es", "en"].index(st.session_state.codigos_idioma),
+        format_func=lambda x: "Español" if x == "es" else "English"
+    )
+
+    # Si cambia el idioma, actualizar y forzar recarga
+    if codigos_idioma != st.session_state.codigos_idioma:
+        st.session_state.codigos_idioma = codigos_idioma
+        st.experimental_rerun()
+
+    # Cargar textos definitivos del idioma elegido
+    textos = cargar_lenguaje(st.session_state.codigos_idioma)
     
     # Titulo y descripción
     st.markdown(f'<div class="main-header">🏃‍♂️ {textos["titulo"]}</div>', 
