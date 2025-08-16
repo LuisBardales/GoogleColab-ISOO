@@ -38,6 +38,7 @@
     "coeficiente_determinacion": "Coeficiente de determinación",
     "validacion_cruzada": "Validación cruzada 5-fold",
     "normalidad": "normalidad",
+    "homoscedasticidad": "homoscedasticity",
     "comparacion_grupos": "comparación de grupos",
     "comparaciones_multiples": "comparaciones múltiples"
 }

@@ -36,9 +36,12 @@ from reportlab.lib.units import inch
 import io
 import base64
 
+# Variable global para multilenguaje
+textos = obtener_textos()
+
 # Configuración
 st.set_page_config(
-    page_title="Predictor de Rendimiento Deportivo",
+    page_title=f"{textos['titulo']}",
     page_icon="🏃‍♂️",
     layout="wide",
     initial_sidebar_state="expanded"
