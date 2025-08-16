@@ -67,5 +67,10 @@
     "visualizaciones_descriptivas": "Descriptive Visualizations",
     "distribuciones_variables_numericas": "Numerical Variables Distributions",
     "seleccion_variables": "Select variables to visualize:",
-    "distribucion_variables": "Variable Distributions"
+    "distribucion_variables": "Variable Distributions",
+    "mapa_calor": "Heatmap - Correlation Matrix",
+    "matriz_correlacion_variables_numericas": "Correlation Matrix of Numeric Variables",
+    "diagrama_caja_categoria": "Box Plot by Category",
+    "seleccion_variable_categorica": "Select categorical variable:",
+    "distribucion_performance_metric": "Distribution of Performance_Metric by"
 }

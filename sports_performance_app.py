@@ -269,7 +269,7 @@ class PredictorRendimientoDeportivo:
             st.plotly_chart(fig, use_container_width=True)
         
         # Mapa de Calor de Correlación
-        st.subheader("🔥 Mapa de Calor - Matriz de Correlación")
+        st.subheader(f"🔥 {textos['mapa_calor']}")
         
         corr_matriz = datos_numericos.corr()
         
@@ -278,7 +278,7 @@ class PredictorRendimientoDeportivo:
             text_auto=True,
             color_continuous_scale='RdBu_r',
             aspect='auto',
-            title='Matriz de Correlación de Variables Numéricas'
+            title=f'{textos["matriz_correlacion_variables_numericas"]}'
         )
         fig.update_layout(height=600)
         st.plotly_chart(fig, use_container_width=True)
@@ -286,10 +286,10 @@ class PredictorRendimientoDeportivo:
         # Plots de caja para variables categoricas
         cols_categoricas = self.datos.select_dtypes(include=['object']).columns
         if len(cols_categoricas) > 0 and 'Performance_Metric' in datos_numericos.columns:
-            st.subheader("📦 Diagramas de Caja por Categorías")
+            st.subheader(f"📦 {textos['diagrama_caja_categoria']}")
             
             cat_seleccionada = st.selectbox(
-                "Selecciona variable categórica:",
+                f"{textos['seleccion_variable_categorica']}",
                 cols_categoricas
             )
             
@@ -298,7 +298,7 @@ class PredictorRendimientoDeportivo:
                     self.datos, 
                     x=cat_seleccionada, 
                     y='Performance_Metric',
-                    title=f'Distribución de Performance_Metric por {cat_seleccionada}'
+                    title=f'{textos["distribucion_performance_metric"]} {cat_seleccionada}'
                 )
                 st.plotly_chart(fig, use_container_width=True)
     

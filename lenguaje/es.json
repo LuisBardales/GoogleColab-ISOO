@@ -67,5 +67,10 @@
     "visualizaciones_descriptivas": "Visualizaciones Descriptivas",
     "distribuciones_variables_numericas": "Distribuciones de Variables Numéricas",
     "seleccion_variables": "Selecciona variables para visualizar:",
-    "distribucion_variables": "Distribuciones de Variables"
+    "distribucion_variables": "Distribuciones de Variables",
+    "mapa_calor": "Mapa de Calor - Matriz de Correlación",
+    "matriz_correlacion_variables_numericas": "Matriz de Correlación de Variables Numéricas",
+    "diagrama_caja_categoria": "Diagrama de Caja por Categoría",
+    "seleccion_variable_categorica": "Selecciona variable categórica:",
+    "distribucion_performance_metric": "Distribución de Performance_Metric por"
 }
