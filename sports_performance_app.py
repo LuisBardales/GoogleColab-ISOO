@@ -937,39 +937,39 @@ def main():
     st.sidebar.title(f'🚀 {textos["navegacion"]}')
     
     # Opción de cargar datos
-    st.sidebar.subheader("📁 Cargar Datos")
-    archivo_cargado = st.sidebar.file_uploader("Cargar archivo CSV", type=['csv'])
+    st.sidebar.subheader(f"📁 {textos['cargar_datos']}")
+    archivo_cargado = st.sidebar.file_uploader(f"{textos['cargar_archivo']}", type=['csv'])
     
     if archivo_cargado is not None:
         # Leer archivo cargado
         try:
             predictor.datos = pd.read_csv(archivo_cargado)
-            st.sidebar.success("✅ Archivo cargado exitosamente!")
+            st.sidebar.success(f"✅ {textos['carga_exitosa']}")
         except Exception as e:
-            st.sidebar.error(f"❌ Error al cargar archivo: {str(e)}")
+            st.sidebar.error(f"❌ {textos['carga_erronea']} {str(e)}")
             predictor.datos = None
     else:
         # Utilizar datos proporcionados
         try:
             # Intentar leer el archivo CSV proporcionado
             predictor.datos = pd.read_csv('datasport.csv')
-            st.sidebar.success("✅ Usando archivo datasport.csv")
+            st.sidebar.success(f"✅ {textos['uso_archivo_datasport']}")
         except:
             # Si no se encuentra el archivo, cargar datos de muestra
-            if st.sidebar.button("🔄 Cargar Datos de Ejemplo"):
+            if st.sidebar.button(f"🔄 {textos['carga_datos_ejemplo']}"):
                 predictor.cargar_data()
     
     # Opciones de Navegación
     pasos_analisis = [
-        "📊 Análisis Exploratorio",
-        "🔧 Preprocesamiento",
-        "🤖 Entrenamiento de Modelos",
-        "📈 Evaluación y Comparación",
-        "🧪 Pruebas Estadísticas",
-        "📄 Generar Reporte"
+        f"📊 {textos['analisis_exploratorio']}",
+        f"🔧 {textos['prepropresamiento']}",
+        f"🤖 {textos['entrenamiento_modelo']}",
+        f"📈 {textos['evaluacion_comparacion']}",
+        f"🧪 {textos['pruebas_estadisticas']}",
+        f"📄 {textos['generar_reporte']}"
     ]
     
-    paso_seleccionado = st.sidebar.selectbox("Seleccionar Análisis", pasos_analisis)
+    paso_seleccionado = st.sidebar.selectbox(f"{textos['seleccionar_analisis']}", pasos_analisis)
     
     # Revisar si hay datos cargados
     if predictor.datos is None:
