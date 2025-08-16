@@ -28,5 +28,16 @@
     "evaluacion_comparacion": "Evaluación y Comparación",
     "pruebas_estadisticas": "Pruebas Estadísticas",
     "generar_reporte": "Generar Reporte",
-    "seleccionar_analisis": "Seleccionar Análisis"
+    "seleccionar_analisis": "Seleccionar Análisis",
+    "no_datos_disponibles": "No hay datos disponibles. Por favor, carga un archivo CSV o usa los datos de ejemplo.",
+    "preprocesamiento_completado": "Preprocesamiento completado. Puedes continuar con el entrenamiento de modelos.",
+    "información_adicional": "Información Adicional",
+    "algoritmos_implementados": "Algoritmos implementados:",
+    "hibrido": "Híbrido",
+    "metricas_evaluacion": "Métricas de evaluación:",
+    "coeficiente_determinacion": "Coeficiente de determinación",
+    "validacion_cruzada": "Validación cruzada 5-fold",
+    "normalidad": "normalidad",
+    "comparacion_grupos": "comparación de grupos",
+    "comparaciones_multiples": "comparaciones múltiples"
 }

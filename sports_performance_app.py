@@ -973,27 +973,27 @@ def main():
     
     # Revisar si hay datos cargados
     if predictor.datos is None:
-        st.error("❌ No hay datos disponibles. Por favor, carga un archivo CSV o usa los datos de ejemplo.")
+        st.error(f"❌ {textos['no_datos_disponibles']}")
         return
     
     # Ejecutar analisis seleccionado
-    if paso_seleccionado == "📊 Análisis Exploratorio":
+    if paso_seleccionado == f"📊 {textos['analisis_exploratorio']}":
         predictor.analisis_datos_exploratorios()
         predictor.estadisticas_descriptivas()
         predictor.crear_visualizaciones()
         
-    elif paso_seleccionado == "🔧 Preprocesamiento":
+    elif paso_seleccionado == f"🔧 {textos['preprocesamiento']}":
         if predictor.preprocesamiento_datos():
-            st.success("✅ Preprocesamiento completado. Puedes continuar con el entrenamiento de modelos.")
+            st.success(f"✅ {textos['preprocesamiento_completado']}")
         
-    elif paso_seleccionado == "🤖 Entrenamiento de Modelos":
+    elif paso_seleccionado == f"🤖 {textos['entrenamiento_modelo']}":
         if predictor.datos_procesados is None:
             if predictor.preprocesamiento_datos():
                 predictor.entreno_modelos()
         else:
             predictor.entreno_modelos()
             
-    elif paso_seleccionado == "📈 Evaluación y Comparación":
+    elif paso_seleccionado == f"📈 {textos['evaluacion_comparacion']}":
         if not predictor.resultados:
             if predictor.datos_procesados is None:
                 predictor.preprocesamiento_datos()
@@ -1001,7 +1001,7 @@ def main():
         
         mejor_modelo, resultados_df = predictor.evaluar_modelos()
         
-    elif paso_seleccionado == "🧪 Pruebas Estadísticas":
+    elif paso_seleccionado == f"🧪 {textos['pruebas_estadisticas']}":
         if not predictor.resultados:
             if predictor.datos_procesados is None:
                 predictor.preprocesamiento_datos()
@@ -1009,7 +1009,7 @@ def main():
         
         predictor.pruebas_estadisticas()
         
-    elif paso_seleccionado == "📄 Generar Reporte":
+    elif paso_seleccionado == f"📄 {textos['generar_reporte']}":
         if not predictor.resultados:
             if predictor.datos_procesados is None:
                 predictor.preprocesamiento_datos()
@@ -1020,29 +1020,29 @@ def main():
     
     # Pie de página
     st.markdown("---")
-    st.markdown("""
-    ### 📚 Información Adicional
+    st.markdown(f"""
+    ### 📚 {textos['informacion_adicional']}
     
-    **Algoritmos implementados:**
+    **{textos['algoritmos_implementados']}**
     - Linear Regression
     - Random Forest
     - Gradient Boosting
     - Support Vector Regression (SVR)
     - Neural Networks (MLP)
-    - Híbrido 1: Random Forest + Gradient Boosting
-    - Híbrido 2: Random Forest + SVR + Neural Network
+    - {textos['hibrido']} 1: Random Forest + Gradient Boosting
+    - {textos['hibrido']} 2: Random Forest + SVR + Neural Network
     
-    **Métricas de evaluación:**
-    - R² (Coeficiente de determinación)
+    **{textos['metricas_evaluacion']}**
+    - R² ({textos['coeficiente_determinacion']})
     - RMSE (Root Mean Square Error)
     - MAE (Mean Absolute Error)
-    - Validación cruzada 5-fold
+    - {textos['validacion_cruzada']}
     
-    **Pruebas estadísticas:**
-    - Shapiro-Wilk (normalidad)
-    - Levene (homoscedasticidad)
-    - Kruskal-Wallis (comparación de grupos)
-    - Post-hoc Dunn (comparaciones múltiples)
+    **{textos['pruebas_estadisticas']}**
+    - Shapiro-Wilk ({textos['normalidad']})
+    - Levene ({textos['homoscedasticidad']})
+    - Kruskal-Wallis ({textos['comparacion_grupos']})
+    - Post-hoc Dunn ({textos['comparaciones_multiples']})
     """)
 
 # Instrucciones para ejecutar la aplicación

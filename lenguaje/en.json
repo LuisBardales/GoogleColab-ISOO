@@ -28,5 +28,17 @@
     "evaluacion_comparacion": "Evaluation and Comparison",
     "pruebas_estadisticas": "Statistical Tests",
     "generar_reporte": "Generate Report",
-    "seleccionar_analisis": "Select Analysis"
+    "seleccionar_analisis": "Select Analysis",
+    "no_datos_disponibles": "No data available. Please upload a CSV file or use the sample data.",
+    "preprocesamiento_completado": "Preprocessing complete. You can continue with model training.",
+    "información_adicional": "Additional information",
+    "algoritmos_implementados": "Implemented algorithms:",
+    "hibrido": "Hybrid",
+    "metricas_evaluacion": "Evaluation metrics:",
+    "coeficiente_determinacion": "Determination coefficient",
+    "validacion_cruzada": "5-fold cross-validation",
+    "normalidad": "normality",
+    "homoscedasticidad": "homoscedasticity",
+    "comparacion_grupos": "group comparison",
+    "comparaciones_multiples": "multiple comparisons"
 }
