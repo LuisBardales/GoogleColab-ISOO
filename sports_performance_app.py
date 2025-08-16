@@ -41,7 +41,7 @@ textos = obtener_textos()
 
 # Configuración
 st.set_page_config(
-    page_title=f"{textos['titulo']}",
+    page_title=textos.get("titulo", "Predictor de Rendimiento Deportivo"),
     page_icon="🏃‍♂️",
     layout="wide",
     initial_sidebar_state="expanded"
