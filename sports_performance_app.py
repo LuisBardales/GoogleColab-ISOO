@@ -10,7 +10,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Configuracion de Idioma
-from utils.i18n import cargar_lenguaje
+from utils.i18n import obtener_textos
 
 # Librerias de Machine Learning
 from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
@@ -890,7 +890,7 @@ def main():
         st.session_state.codigos_idioma = "es"
 
     # Cargar textos del idioma actual
-    textos = cargar_lenguaje(st.session_state.codigos_idioma)
+    textos = obtener_textos()
 
     # Mostrar selector con traducción actual
     codigos_idioma = st.sidebar.selectbox(
@@ -906,7 +906,7 @@ def main():
         st.rerun()
 
     # Cargar textos definitivos del idioma elegido
-    textos = cargar_lenguaje(st.session_state.codigos_idioma)
+    textos = obtener_textos()
     
     # Titulo y descripción
     st.markdown(f'<div class="main-header">🏃‍♂️ {textos["titulo"]}</div>', 

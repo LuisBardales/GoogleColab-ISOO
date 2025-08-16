@@ -31,7 +31,7 @@
     "seleccionar_analisis": "Select Analysis",
     "no_datos_disponibles": "No data available. Please upload a CSV file or use the sample data.",
     "preprocesamiento_completado": "Preprocessing complete. You can continue with model training.",
-    "información_adicional": "Additional information",
+    "informacion_adicional": "Additional information",
     "algoritmos_implementados": "Implemented algorithms:",
     "hibrido": "Hybrid",
     "metricas_evaluacion": "Evaluation metrics:",
