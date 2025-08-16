@@ -78,5 +78,9 @@
     "muestras": "muestras",
     "caracteristicas": "características",
     "conjunto_entrenamiento": "Conjunto de entrenamiento:",
-    "conjunto_prueba": "Conjunto de prueba:"
+    "conjunto_prueba": "Conjunto de prueba:",
+    "no_datos_cargados": "No se han cargado datos. Por favor, carga un archivo CSV o usa los datos de ejemplo.",
+    "datos_cargados": "Datos cargados",
+    "limpiar_datos": "Limpiar datos",
+    "progreso_analisis": "Progreso del Análisis"
 }

@@ -78,5 +78,9 @@
     "muestras": "samples",
     "caracteristicas": "characteristics",
     "conjunto_entrenamiento": "Training set:",
-    "conjunto_prueba": "Test set:"
+    "conjunto_prueba": "Test set:",
+    "no_datos_cargados": "No data loaded. Please upload a CSV file or use the sample data.",
+    "datos_cargados": "Data loaded",
+    "limpiar_datos": "Clear data",
+    "progreso_analisis": "Analysis Progress"
 }

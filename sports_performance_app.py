@@ -1018,7 +1018,7 @@ def main():
     
     # *** AGREGAR BOTÓN PARA LIMPIAR DATOS ***
     if st.session_state.datos_cargados:
-        if st.sidebar.button("🗑️ Limpiar datos", key="btn_limpiar"):
+        if st.sidebar.button(f"🗑️ {textos['limpiar_datos']}", key="btn_limpiar"):
             # Reinicializar el predictor
             st.session_state.predictor = PredictorRendimientoDeportivo()
             st.session_state.datos_cargados = False
@@ -1109,7 +1109,7 @@ def main():
 
     # *** INDICADORES DE PROGRESO EN LA SIDEBAR ***
     st.sidebar.markdown("---")
-    st.sidebar.subheader("📋 Progreso del Análisis")
+    st.sidebar.subheader(f"📋 {textos['progreso_analisis']}")
     
     pasos_estado = {
         'Análisis Exploratorio': st.session_state.paso_completado['exploratorio'],
