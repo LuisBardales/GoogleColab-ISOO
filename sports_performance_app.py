@@ -36,12 +36,9 @@ from reportlab.lib.units import inch
 import io
 import base64
 
-# Variable global para multilenguaje
-textos = obtener_textos()
-
 # Configuración
 st.set_page_config(
-    page_title=textos.get("titulo", "Predictor de Rendimiento Deportivo"),
+    page_title="Predictor de Rendimiento Deportivo",
     page_icon="🏃‍♂️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -121,7 +118,8 @@ class PredictorRendimientoDeportivo:
                 }
                 
                 self.datos = pd.DataFrame(datos)
-                
+
+            textos = obtener_textos()
             st.success(f"✅ {textos['datos_cargados_exitosamente']} {self.datos.shape[0]} filas, {self.datos.shape[1]} columnas")
             return True
             
