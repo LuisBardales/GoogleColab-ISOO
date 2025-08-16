@@ -72,6 +72,23 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+def inicializar_session_state():
+    """Inicializa el estado de sesión para mantener persistencia"""
+    if 'predictor' not in st.session_state:
+        st.session_state.predictor = PredictorRendimientoDeportivo()
+    if 'datos_cargados' not in st.session_state:
+        st.session_state.datos_cargados = False
+    if 'archivo_nombre' not in st.session_state:
+        st.session_state.archivo_nombre = None
+    if 'paso_completado' not in st.session_state:
+        st.session_state.paso_completado = {
+            'exploratorio': False,
+            'preprocesamiento': False,
+            'entrenamiento': False,
+            'evaluacion': False,
+            'estadisticas': False
+        }
+
 class PredictorRendimientoDeportivo:
     def __init__(self):
         self.datos = None
@@ -896,6 +913,8 @@ class PredictorRendimientoDeportivo:
 def main():
     """Funcion principal para ejecutar la aplicación"""
 
+    inicializar_session_state()
+
     # Idioma por defecto la primera vez
     if "codigos_idioma" not in st.session_state:
         st.session_state.codigos_idioma = "es"
@@ -908,7 +927,8 @@ def main():
         f"🌍 {textos['seleccion_lenguaje']}",
         ["es", "en"],
         index=["es", "en"].index(st.session_state.codigos_idioma),
-        format_func=lambda x: "Español" if x == "es" else "English"
+        format_func=lambda x: "Español" if x == "es" else "English",
+        key="selector_idioma"
     )
 
     # Si cambia el idioma, actualizar y forzar recarga
@@ -942,33 +962,75 @@ def main():
     """)
     
     # Inicializar predictor
-    predictor = PredictorRendimientoDeportivo()
+    predictor = st.session_state.predictor
     
     # Barra lateral para navegación
     st.sidebar.title(f'🚀 {textos["navegacion"]}')
+
+    # *** MOSTRAR ESTADO ACTUAL DE LOS DATOS ***
+    if st.session_state.datos_cargados:
+        st.sidebar.success(f"✅ {textos['datos_cargados']}: {st.session_state.archivo_nombre}")
+        if predictor.datos is not None:
+            st.sidebar.info(f"📊 Shape: {predictor.datos.shape}")
+    else:
+        st.sidebar.warning(f"⚠️ {textos['no_datos_cargados']}")
     
     # Opción de cargar datos
     st.sidebar.subheader(f"📁 {textos['cargar_datos']}")
     archivo_cargado = st.sidebar.file_uploader(f"{textos['cargar_archivo']}", type=['csv'])
     
     if archivo_cargado is not None:
-        # Leer archivo cargado
+        # Solo cargar si es un archivo nuevo o no hay datos cargados
+        if (not st.session_state.datos_cargados or 
+            st.session_state.archivo_nombre != archivo_cargado.name):
+            
+            try:
+                predictor.datos = pd.read_csv(archivo_cargado)
+                st.session_state.datos_cargados = True
+                st.session_state.archivo_nombre = archivo_cargado.name
+                # Resetear pasos completados cuando se cargan nuevos datos
+                st.session_state.paso_completado = {
+                    'exploratorio': False,
+                    'preprocesamiento': False,
+                    'entrenamiento': False,
+                    'evaluacion': False,
+                    'estadisticas': False
+                }
+                st.sidebar.success(f"✅ {textos['carga_exitosa']}")
+                st.rerun()  # Refrescar para mostrar el nuevo estado
+            except Exception as e:
+                st.sidebar.error(f"❌ {textos['carga_erronea']} {str(e)}")
+                
+    elif not st.session_state.datos_cargados:
+        # Solo intentar cargar datasport.csv si no hay datos cargados
         try:
-            predictor.datos = pd.read_csv(archivo_cargado)
-            st.sidebar.success(f"✅ {textos['carga_exitosa']}")
-        except Exception as e:
-            st.sidebar.error(f"❌ {textos['carga_erronea']} {str(e)}")
-            predictor.datos = None
-    else:
-        # Utilizar datos proporcionados
-        try:
-            # Intentar leer el archivo CSV proporcionado
             predictor.datos = pd.read_csv('datasport.csv')
+            st.session_state.datos_cargados = True
+            st.session_state.archivo_nombre = 'datasport.csv'
             st.sidebar.success(f"✅ {textos['uso_archivo_datasport']}")
         except:
-            # Si no se encuentra el archivo, cargar datos de muestra
-            if st.sidebar.button(f"🔄 {textos['carga_datos_ejemplo']}"):
-                predictor.cargar_data()
+            # Si no se encuentra el archivo, mostrar botón para datos de ejemplo
+            if st.sidebar.button(f"🔄 {textos['carga_datos_ejemplo']}", key="btn_datos_ejemplo"):
+                if predictor.cargar_data():
+                    st.session_state.datos_cargados = True
+                    st.session_state.archivo_nombre = 'datos_ejemplo'
+                    st.rerun()
+    
+    # *** AGREGAR BOTÓN PARA LIMPIAR DATOS ***
+    if st.session_state.datos_cargados:
+        if st.sidebar.button("🗑️ Limpiar datos", key="btn_limpiar"):
+            # Reinicializar el predictor
+            st.session_state.predictor = PredictorRendimientoDeportivo()
+            st.session_state.datos_cargados = False
+            st.session_state.archivo_nombre = None
+            st.session_state.paso_completado = {
+                'exploratorio': False,
+                'preprocesamiento': False,
+                'entrenamiento': False,
+                'evaluacion': False,
+                'estadisticas': False
+            }
+            st.rerun()
     
     # Opciones de Navegación
     pasos_analisis = [
@@ -980,10 +1042,13 @@ def main():
         f"📄 {textos['generar_reporte']}"
     ]
     
-    paso_seleccionado = st.sidebar.selectbox(f"{textos['seleccionar_analisis']}", pasos_analisis)
+    paso_seleccionado = st.sidebar.selectbox(
+        f"{textos['seleccionar_analisis']}",
+        pasos_analisis,
+        key="selector_paso")
     
     # Revisar si hay datos cargados
-    if predictor.datos is None:
+    if not st.session_state.datos_cargados or predictor.datos is None:
         st.error(f"❌ {textos['no_datos_disponibles']}")
         return
     
@@ -992,42 +1057,73 @@ def main():
         predictor.analisis_datos_exploratorios()
         predictor.estadisticas_descriptivas()
         predictor.crear_visualizaciones()
+        st.session_state.paso_completado['exploratorio'] = True
         
     elif paso_seleccionado == f"🔧 {textos['preprocesamiento']}":
         if predictor.preprocesamiento_datos():
             st.success(f"✅ {textos['preprocesamiento_completado']}")
+            st.session_state.paso_completado['preprocesamiento'] = True
         
     elif paso_seleccionado == f"🤖 {textos['entrenamiento_modelo']}":
         if predictor.datos_procesados is None:
             if predictor.preprocesamiento_datos():
                 predictor.entreno_modelos()
+                st.session_state.paso_completado['entrenamiento'] = True
         else:
             predictor.entreno_modelos()
+            st.session_state.paso_completado['entrenamiento'] = True
             
     elif paso_seleccionado == f"📈 {textos['evaluacion_comparacion']}":
         if not predictor.resultados:
             if predictor.datos_procesados is None:
                 predictor.preprocesamiento_datos()
+                st.session_state.paso_completado['preprocesamiento'] = True
             predictor.entreno_modelos()
+            st.session_state.paso_completado['entrenamiento'] = True
         
         mejor_modelo, resultados_df = predictor.evaluar_modelos()
+        st.session_state.paso_completado['evaluacion'] = True
         
     elif paso_seleccionado == f"🧪 {textos['pruebas_estadisticas']}":
         if not predictor.resultados:
             if predictor.datos_procesados is None:
                 predictor.preprocesamiento_datos()
+                st.session_state.paso_completado['preprocesamiento'] = True
             predictor.entreno_modelos()
+            st.session_state.paso_completado['entrenamiento'] = True
         
         predictor.pruebas_estadisticas()
+        st.session_state.paso_completado['estadisticas'] = True
         
     elif paso_seleccionado == f"📄 {textos['generar_reporte']}":
         if not predictor.resultados:
             if predictor.datos_procesados is None:
                 predictor.preprocesamiento_datos()
+                st.session_state.paso_completado['preprocesamiento'] = True
             predictor.entreno_modelos()
+            st.session_state.paso_completado['entrenamiento'] = True
         
         mejor_modelo, resultados_df = predictor.evaluar_modelos()
+        st.session_state.paso_completado['evaluacion'] = True
         predictor.generar_reporte_pdf(mejor_modelo, resultados_df)
+
+    # *** INDICADORES DE PROGRESO EN LA SIDEBAR ***
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("📋 Progreso del Análisis")
+    
+    pasos_estado = {
+        'Análisis Exploratorio': st.session_state.paso_completado['exploratorio'],
+        'Preprocesamiento': st.session_state.paso_completado['preprocesamiento'],
+        'Entrenamiento': st.session_state.paso_completado['entrenamiento'],
+        'Evaluación': st.session_state.paso_completado['evaluacion'],
+        'Pruebas Estadísticas': st.session_state.paso_completado['estadisticas']
+    }
+    
+    for paso, completado in pasos_estado.items():
+        if completado:
+            st.sidebar.success(f"✅ {paso}")
+        else:
+            st.sidebar.info(f"⏳ {paso}")
     
     # Pie de página
     st.markdown("---")
