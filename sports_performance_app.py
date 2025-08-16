@@ -304,7 +304,10 @@ class PredictorRendimientoDeportivo:
     
     def preprocesamiento_datos(self):
         """Preprocesa datos para machine learning"""
-        st.subheader("🔧 Preprocesamiento de Datos")
+
+        textos=obtener_textos()
+
+        st.subheader(f"🔧 {textos['preprocesamiento_datos']}")
         
         # Crea una copia para el preprocesamiento
         self.datos_procesados = self.datos.copy()
@@ -356,9 +359,9 @@ class PredictorRendimientoDeportivo:
         self.X_entreno_escalado = self.escala.fit_transform(self.X_entreno)
         self.X_prueba_escalada = self.escala.transform(self.X_prueba)
         
-        st.success(f"✅ Datos preprocesados: {X.shape[0]} muestras, {X.shape[1]} características")
-        st.write(f"🔹 Conjunto de entrenamiento: {self.X_entreno.shape[0]} muestras")
-        st.write(f"🔹 Conjunto de prueba: {self.X_prueba.shape[0]} muestras")
+        st.success(f"✅ {textos['datos_preprocesados']}: {X.shape[0]} {textos['muestras']}, {X.shape[1]} {textos['caracteristicas']}.")
+        st.write(f"🔹 {textos['conjunto_entrenamiento']} {self.X_entreno.shape[0]} {textos['muestras']}")
+        st.write(f"🔹 {textos['conjunto_prueba']} {self.X_prueba.shape[0]} {textos['muestras']}")
         
         return True
     

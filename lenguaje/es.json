@@ -72,5 +72,11 @@
     "matriz_correlacion_variables_numericas": "Matriz de Correlación de Variables Numéricas",
     "diagrama_caja_categoria": "Diagrama de Caja por Categoría",
     "seleccion_variable_categorica": "Selecciona variable categórica:",
-    "distribucion_performance_metric": "Distribución de Performance_Metric por"
+    "distribucion_performance_metric": "Distribución de Performance_Metric por",
+    "preprocesamiento_datos": "Preprocesamiento de Datos",
+    "datos_preprocesados": "Datos preprocesados",
+    "muestras": "muestras",
+    "caracteristicas": "características",
+    "conjunto_entrenamiento": "Conjunto de entrenamiento:",
+    "conjunto_prueba": "Conjunto de prueba:"
 }

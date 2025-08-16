@@ -72,5 +72,11 @@
     "matriz_correlacion_variables_numericas": "Correlation Matrix of Numeric Variables",
     "diagrama_caja_categoria": "Box Plot by Category",
     "seleccion_variable_categorica": "Select categorical variable:",
-    "distribucion_performance_metric": "Distribution of Performance_Metric by"
+    "distribucion_performance_metric": "Distribution of Performance_Metric by",
+    "preprocesamiento_datos": "Data Preprocessing",
+    "datos_preprocesados": "Preprocessed data",
+    "muestras": "samples",
+    "caracteristicas": "characteristics",
+    "conjunto_entrenamiento": "Training set:",
+    "conjunto_prueba": "Test set:"
 }
