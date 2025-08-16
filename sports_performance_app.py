@@ -120,16 +120,18 @@ class PredictorRendimientoDeportivo:
                 self.datos = pd.DataFrame(datos)
 
             textos = obtener_textos()
-            st.success(f"✅ {textos['datos_cargados_exitosamente']} {self.datos.shape[0]} filas, {self.datos.shape[1]} columnas")
+            st.success(f"✅ {textos['datos_cargados_exitosamente']} {self.datos.shape[0]} {textos['filas']}, {self.datos.shape[1]} columnas")
             return True
             
         except Exception as e:
-            st.error(f"❌ Error al cargar datos: {str(e)}")
+            st.error(f"❌ {textos['datos_cargados_erroneamente']} {str(e)}")
             return False
     
     def analisis_datos_exploratorios(self):
         """Analisis Exploratorio Integral de Datos"""
-        st.markdown('<div class="section-header">📊 Análisis Exploratorio de Datos (EDA)</div>', 
+        textos = obtener_textos()
+
+        st.markdown(f'<div class="section-header">📊 {textos["analisis_exploratorio_datos"]}</div>', 
                    unsafe_allow_html=True)
         
         # Información Básica
@@ -138,7 +140,7 @@ class PredictorRendimientoDeportivo:
         with col1:
             st.markdown(f"""
             <div class="metric-card">
-                <h4>📋 Filas</h4>
+                <h4>📋 {textos['filas_mayus']}</h4>
                 <h2>{self.datos.shape[0]:,}</h2>
             </div>
             """, unsafe_allow_html=True)
@@ -146,7 +148,7 @@ class PredictorRendimientoDeportivo:
         with col2:
             st.markdown(f"""
             <div class="metric-card">
-                <h4>🔢 Columnas</h4>
+                <h4>🔢 {textos['columnas_mayus']}</h4>
                 <h2>{self.datos.shape[1]:,}</h2>
             </div>
             """, unsafe_allow_html=True)
@@ -155,7 +157,7 @@ class PredictorRendimientoDeportivo:
             porcentaje_perdido = (self.datos.isnull().sum().sum() / (self.datos.shape[0] * self.datos.shape[1])) * 100
             st.markdown(f"""
             <div class="metric-card">
-                <h4>❓ Datos Faltantes</h4>
+                <h4>❓ {textos['datos_faltantes']}</h4>
                 <h2>{porcentaje_perdido:.1f}%</h2>
             </div>
             """, unsafe_allow_html=True)
@@ -164,35 +166,35 @@ class PredictorRendimientoDeportivo:
             numeric_cols = self.datos.select_dtypes(include=[np.number]).shape[1]
             st.markdown(f"""
             <div class="metric-card">
-                <h4>🔢 Variables Numéricas</h4>
+                <h4>🔢 {textos['variables_numericas']}</h4>
                 <h2>{numeric_cols}</h2>
             </div>
             """, unsafe_allow_html=True)
         
         # Descripción General de los Datos
-        st.subheader("🔍 Vista General de los Datos")
+        st.subheader(f"🔍 {textos['vista_general_datos']}")
         st.dataframe(self.datos.head(100), use_container_width=True)
         
         # Valores Faltantes y Tipos de Datos
         col1, col2 = st.columns(2)
         
         with col1:
-            st.subheader("📊 Tipos de Datos")
+            st.subheader(f"📊 {textos['tipos_datos']}")
             tipos_datos = pd.DataFrame({
-                'Columna': self.datos.dtypes.index,
-                'Tipo': self.datos.dtypes.values
+                {textos['columna_mayus']}: self.datos.dtypes.index,
+                {textos['tipo_mayus']}: self.datos.dtypes.values
             })
             st.dataframe(tipos_datos, use_container_width=True)
             
         with col2:
-            st.subheader("❓ Valores Faltantes")
+            st.subheader(f"❓ {textos['valores_faltantes']}")
             datos_faltantes = self.datos.isnull().sum()
             faltante_df = pd.DataFrame({
-                'Columna': datos_faltantes.index,
-                'Faltantes': datos_faltantes.values,
-                'Porcentaje': (datos_faltantes.values / len(self.datos)) * 100
-            }).sort_values('Faltantes', ascending=False)
-            st.dataframe(faltante_df[faltante_df['Faltantes'] > 0], use_container_width=True)
+                {textos['columna_mayus']}: datos_faltantes.index,
+                {textos['faltantes_mayus']}: datos_faltantes.values,
+                {textos['porcentaje_mayus']}: (datos_faltantes.values / len(self.datos)) * 100
+            }).sort_values({textos['faltantes_mayus']}, ascending=False)
+            st.dataframe(faltante_df[faltante_df[{textos['faltantes_mayus']}] > 0], use_container_width=True)
     
     def estadisticas_descriptivas(self):
         """Generar estadísticas descriptivas completas"""
