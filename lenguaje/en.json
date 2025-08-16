@@ -63,5 +63,9 @@
     "faltantes_mayus": "Missing",
     "porcentaje_mayus": "Percentage",
     "estadisticos_descriptivos": "Descriptive Statistics",
-    "estadisticos_avanzados": "Advanced Statistics"
+    "estadisticos_avanzados": "Advanced Statistics",
+    "visualizaciones_descriptivas": "Descriptive Visualizations",
+    "distribuciones_variables_numericas": "Numerical Variables Distributions",
+    "seleccion_variables": "Select variables to visualize:",
+    "distribucion_variables": "Variable Distributions"
 }

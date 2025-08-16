@@ -229,16 +229,19 @@ class PredictorRendimientoDeportivo:
     
     def crear_visualizaciones(self):
         """ Generar visualizaciones integrales"""
-        st.subheader("📊 Visualizaciones Descriptivas")
+
+        textos = obtener_textos()
+
+        st.subheader(f"📊 {textos['visualizaciones_descriptivas']}")
         
         datos_numericos = self.datos.select_dtypes(include=[np.number])
         
         # Plots de distribución
-        st.subheader("📈 Distribuciones de Variables Numéricas")
+        st.subheader(f"📈 {textos['distribuciones_variables_numericas']}")
         
         # Seleccionar variables para los plots de distribución
         vars_seleccionadas = st.multiselect(
-            "Selecciona variables para visualizar:",
+            f"{textos['seleccion_variables']}",
             datos_numericos.columns.tolist(),
             default=datos_numericos.columns[:4].tolist()
         )
@@ -262,7 +265,7 @@ class PredictorRendimientoDeportivo:
                 )
             
             fig.update_layout(height=300 * ((len(vars_seleccionadas) + 1) // 2), 
-                            title_text="Distribuciones de Variables")
+                            title_text=f"{textos['distribucion_variables']}")
             st.plotly_chart(fig, use_container_width=True)
         
         # Mapa de Calor de Correlación
