@@ -40,5 +40,6 @@
     "normalidad": "normality",
     "homoscedasticidad": "homoscedasticity",
     "comparacion_grupos": "group comparison",
-    "comparaciones_multiples": "multiple comparisons"
+    "comparaciones_multiples": "multiple comparisons",
+    "datos_cargados_exitosamente": "Data loaded successfully:"
 }

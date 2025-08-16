@@ -122,7 +122,7 @@ class PredictorRendimientoDeportivo:
                 
                 self.datos = pd.DataFrame(datos)
                 
-            st.success(f"✅ Datos cargados exitosamente: {self.datos.shape[0]} filas, {self.datos.shape[1]} columnas")
+            st.success(f"✅ {textos['datos_cargados_exitosamente']} {self.datos.shape[0]} filas, {self.datos.shape[1]} columnas")
             return True
             
         except Exception as e:
