@@ -198,7 +198,9 @@ class PredictorRendimientoDeportivo:
     
     def estadisticas_descriptivas(self):
         """Generar estadísticas descriptivas completas"""
-        st.subheader("📈 Estadísticos Descriptivos")
+        textos=obtener_textos()
+
+        st.subheader(f"📈 {textos['estadisticos_descriptivos']}")
         
         datos_numericos = self.datos.select_dtypes(include=[np.number])
         
@@ -207,7 +209,7 @@ class PredictorRendimientoDeportivo:
         st.dataframe(estadisticas_descriptivas, use_container_width=True)
         
         # Estadisticas avanzadas
-        st.subheader("📊 Estadísticos Avanzados")
+        st.subheader(f"📊 {textos['estadisticos_avanzados']}")
         
         estadisticas_avanzadas = []
         for columna in datos_numericos.columns:

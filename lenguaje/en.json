@@ -61,5 +61,7 @@
     "valores_faltantes": "Missing Values",
     "faltantes": "missing",
     "faltantes_mayus": "Missing",
-    "porcentaje_mayus": "Percentage"
+    "porcentaje_mayus": "Percentage",
+    "estadisticos_descriptivos": "Descriptive Statistics",
+    "estadisticos_avanzados": "Advanced Statistics"
 }
