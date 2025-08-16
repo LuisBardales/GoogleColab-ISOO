@@ -120,7 +120,7 @@ class PredictorRendimientoDeportivo:
                 self.datos = pd.DataFrame(datos)
 
             textos = obtener_textos()
-            st.success(f"✅ {textos['datos_cargados_exitosamente']} {self.datos.shape[0]} {textos['filas']}, {self.datos.shape[1]} columnas")
+            st.success(f"✅ {textos['datos_cargados_exitosamente']} {self.datos.shape[0]} {textos['filas']}, {self.datos.shape[1]} {textos['columnas']}.")
             return True
             
         except Exception as e:
@@ -181,8 +181,8 @@ class PredictorRendimientoDeportivo:
         with col1:
             st.subheader(f"📊 {textos['tipos_datos']}")
             tipos_datos = pd.DataFrame({
-                {textos['columna_mayus']}: self.datos.dtypes.index,
-                {textos['tipo_mayus']}: self.datos.dtypes.values
+                textos['columna_mayus']: self.datos.dtypes.index,
+                textos['tipo_mayus']: self.datos.dtypes.values
             })
             st.dataframe(tipos_datos, use_container_width=True)
             
@@ -190,11 +190,11 @@ class PredictorRendimientoDeportivo:
             st.subheader(f"❓ {textos['valores_faltantes']}")
             datos_faltantes = self.datos.isnull().sum()
             faltante_df = pd.DataFrame({
-                {textos['columna_mayus']}: datos_faltantes.index,
-                {textos['faltantes_mayus']}: datos_faltantes.values,
-                {textos['porcentaje_mayus']}: (datos_faltantes.values / len(self.datos)) * 100
-            }).sort_values({textos['faltantes_mayus']}, ascending=False)
-            st.dataframe(faltante_df[faltante_df[{textos['faltantes_mayus']}] > 0], use_container_width=True)
+                textos['columna_mayus']: datos_faltantes.index,
+                textos['faltantes_mayus']: datos_faltantes.values,
+                textos['porcentaje_mayus']: (datos_faltantes.values / len(self.datos)) * 100
+            }).sort_values(textos['faltantes_mayus'], ascending=False)
+            st.dataframe(faltante_df[faltante_df[textos['faltantes_mayus']] > 0], use_container_width=True)
     
     def estadisticas_descriptivas(self):
         """Generar estadísticas descriptivas completas"""
