@@ -962,7 +962,7 @@ def main():
     # Opciones de Navegación
     pasos_analisis = [
         f"📊 {textos['analisis_exploratorio']}",
-        f"🔧 {textos['prepropresamiento']}",
+        f"🔧 {textos['preprocesamiento']}",
         f"🤖 {textos['entrenamiento_modelo']}",
         f"📈 {textos['evaluacion_comparacion']}",
         f"🧪 {textos['pruebas_estadisticas']}",
