@@ -1112,7 +1112,7 @@ def main():
     st.sidebar.subheader(f"📋 {textos['progreso_analisis']}")
     
     pasos_estado = {
-        textos['analisis_exploratorio']: st.session_state.paso_completado['exploratorio'],
+        {textos['analisis_exploratorio']}: st.session_state.paso_completado[{textos['analisis_exploratorio']}],
         textos['preprocesamiento']: st.session_state.paso_completado['preprocesamiento'],
         textos['entrenamiento']: st.session_state.paso_completado['entrenamiento'],
         textos['evaluacion_comparacion']: st.session_state.paso_completado['evaluacion'],
