@@ -88,6 +88,7 @@
     "generar_reporte_titulo": "Generate Report in PDF",
 
     "entrenando": "Training",
+    "evaluacion_modelos": "Model Evaluation",
 
     "entrenamiento_modelos_ML": "Machine Learning Model Training",
     "completado_r2_test": "completed - R² Test:",
