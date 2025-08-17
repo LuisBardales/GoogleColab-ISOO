@@ -384,7 +384,9 @@ class PredictorRendimientoDeportivo:
     
     def entreno_modelos(self):
         """Entrenar múltiples modelos de Machine Learning"""
-        st.subheader("🤖 Entrenamiento de Modelos de Machine Learning")
+        textos = obtener_textos()
+
+        st.subheader(f"🤖 {textos['entrenamiento_modelos_ML']}")
         
         # Definir modelos
         modelos_configuracion = {
@@ -408,7 +410,7 @@ class PredictorRendimientoDeportivo:
         resultados = {}
         
         for i, (nombre, modelo) in enumerate(modelos_configuracion.items()):
-            st.write(f"🔄 Entrenando {nombre}...")
+            st.write(f"🔄 {textos['entrenando']} {nombre}...")
             
             try:
                 # Usa datos escalados para los modelos que se beneficien de ellos
@@ -455,10 +457,10 @@ class PredictorRendimientoDeportivo:
                     'predictions_test': y_pred_prueba
                 }
                 
-                st.write(f"✅ {nombre} completado - R² Test: {prueba_r2:.4f}")
+                st.write(f"✅ {nombre} {textos['completado_r2_test']} {prueba_r2:.4f}")
                 
             except Exception as e:
-                st.write(f"❌ Error en {nombre}: {str(e)}")
+                st.write(f"❌ {textos['error_en']} {nombre}: {str(e)}")
                 
             barra_progreso.progress((i + 1) / len(modelos_configuracion))
         
@@ -467,25 +469,27 @@ class PredictorRendimientoDeportivo:
     
     def evaluar_modelos(self):
         """Comprehensive model evaluation"""
-        st.subheader("📊 Evaluación de Modelos")
+        textos = obtener_textos()
+
+        st.subheader(f"📊 {textos['evaluacion_modelos']}")
         
         if not self.resultados:
-            st.error("❌ No hay resultados de modelos disponibles.")
+            st.error(f"❌ {textos['evaluacion_no_resultados_modelos']}")
             return
         
         # Crear DataFrame de resultados
         datos_resultados = []
         for nombre, resultado in self.resultados.items():
             datos_resultados.append({
-                'Modelo': nombre,
-                'R² Entrenamiento': resultado['train_r2'],
-                'R² Prueba': resultado['test_r2'],
-                'RMSE Entrenamiento': resultado['train_rmse'],
-                'RMSE Prueba': resultado['test_rmse'],
-                'MAE Entrenamiento': resultado['train_mae'],
-                'MAE Prueba': resultado['test_mae'],
-                'CV Media': resultado['cv_mean'],
-                'CV Desv. Est.': resultado['cv_std']
+                textos['modelo']: nombre,
+                textos['r2_entrenamiento']: resultado['train_r2'],
+                textos['r2_prueba']: resultado['test_r2'],
+                textos['rmse_entrenamiento']: resultado['train_rmse'],
+                textos['rmse_prueba']: resultado['test_rmse'],
+                textos['mae_entrenamiento']: resultado['train_mae'],
+                textos['mae_prueba']: resultado['test_mae'],
+                textos['cv_media']: resultado['cv_mean'],
+                textos['cv_desv_est']: resultado['cv_std']
             })
         
         resultados_df = pd.DataFrame(datos_resultados)
@@ -494,20 +498,20 @@ class PredictorRendimientoDeportivo:
         st.dataframe(resultados_df, use_container_width=True)
         
         # Identificación del mejor modelo
-        nombre_mejor_modelo = resultados_df.loc[resultados_df['R² Prueba'].idxmax(), 'Modelo']
-        mejor_r2 = resultados_df['R² Prueba'].max()
+        nombre_mejor_modelo = resultados_df.loc[resultados_df[textos['r2_prueba']].idxmax(), 'Modelo']
+        mejor_r2 = resultados_df[textos['r2_prueba']].max()
         
-        st.success(f"🏆 Mejor modelo: **{nombre_mejor_modelo}** (R² = {mejor_r2:.4f})")
+        st.success(f"🏆 {textos['reporte_mejor_modelo']} **{nombre_mejor_modelo}** (R² = {mejor_r2:.4f})")
         
         # Visualización de comparación de modelos
-        st.subheader("📊 Comparación Visual de Modelos")
+        st.subheader(f"📊 {textos['comparacion_visual_modelos']}")
         
         # Comparación R²
         fig = px.bar(
             resultados_df, 
-            x='Modelo', 
-            y=['R² Entrenamiento', 'R² Prueba'],
-            title='Comparación de R² por Modelo',
+            x=textos['modelo'], 
+            y=[textos['r2_entrenamiento'], textos['r2_prueba']],
+            title=textos['comparacion_por_modelo'],
             barmode='group'
         )
         fig.update_layout(xaxis_tickangle=-45)
@@ -677,9 +681,12 @@ class PredictorRendimientoDeportivo:
     
     def generar_reporte_pdf(self, nombre_mejor_modelo, resultados_df):
         """Generar un informe PDF completo"""
-        st.subheader("📄 Generar Reporte en PDF")
+
+        textos= obtener_textos()
+
+        st.subheader(f"📄 {textos['generar_reporte_titulo']}")
         
-        if st.button("🔄 Generar Reporte PDF"):
+        if st.button(f"🔄 {textos['generar_reporte_pdf']}"):
             try:
                 # Crear PDF en memoria
                 buffer = io.BytesIO()
@@ -971,7 +978,7 @@ def main():
     if st.session_state.datos_cargados:
         st.sidebar.success(f"✅ {textos['datos_cargados']}: {st.session_state.archivo_nombre}")
         if predictor.datos is not None:
-            st.sidebar.info(f"📊 Shape: {predictor.datos.shape}")
+            st.sidebar.info(f"📊 {textos['forma']}: {predictor.datos.shape}")
     else:
         st.sidebar.warning(f"⚠️ {textos['no_datos_cargados']}")
     
