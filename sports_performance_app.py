@@ -390,16 +390,16 @@ class PredictorRendimientoDeportivo:
         
         # Definir modelos
         modelos_configuracion = {
-            'Linear Regression': LinearRegression(),
-            'Random Forest': RandomForestRegressor(n_estimators=100, random_state=42),
-            'Gradient Boosting': GradientBoostingRegressor(n_estimators=100, random_state=42),
+            'Regresión Lineal': LinearRegression(),
+            'Bosque Aleatorio (RF)': RandomForestRegressor(n_estimators=100, random_state=42),
+            'Potenciación del Gradiente (GB)': GradientBoostingRegressor(n_estimators=100, random_state=42),
             'SVR': SVR(kernel='rbf'),
-            'Neural Network': MLPRegressor(hidden_layer_sizes=(100, 50), max_iter=1000, random_state=42),
-            'Hybrid 1 (RF + GB)': VotingRegressor([
+            'Red Neuronal (NN)': MLPRegressor(hidden_layer_sizes=(100, 50), max_iter=1000, random_state=42),
+            'Híbrido 1 (RF + GB)': VotingRegressor([
                 ('rf', RandomForestRegressor(n_estimators=50, random_state=42)),
                 ('gb', GradientBoostingRegressor(n_estimators=50, random_state=42))
             ]),
-            'Hybrid 2 (RF + SVR + NN)': VotingRegressor([
+            'Híbrido 2 (RF + SVR + NN)': VotingRegressor([
                 ('rf', RandomForestRegressor(n_estimators=50, random_state=42)),
                 ('svr', SVR(kernel='rbf')),
                 ('nn', MLPRegressor(hidden_layer_sizes=(50,), max_iter=500, random_state=42))
@@ -414,7 +414,7 @@ class PredictorRendimientoDeportivo:
             
             try:
                 # Usa datos escalados para los modelos que se beneficien de ellos
-                if nombre in ['SVR', 'Neural Network']:
+                if nombre in ['SVR', 'Red Neuronal (NN)']:
                     X_entreno_uso = self.X_entreno_escalado
                     X_prueba_uso = self.X_prueba_escalada
                 else:
@@ -437,7 +437,7 @@ class PredictorRendimientoDeportivo:
                 prueba_mae = mean_absolute_error(self.y_prueba, y_pred_prueba)
                 
                 # Validación cruzada
-                if nombre in ['SVR', 'Neural Network']:
+                if nombre in ['SVR', 'Red Neuronal (NN)']:
                     cv_puntuaciones = cross_val_score(modelo, self.X_entreno_escalado, self.y_entreno, 
                                               cv=5, scoring='r2')
                 else:
@@ -520,18 +520,18 @@ class PredictorRendimientoDeportivo:
         # Comparación RMSE
         fig2 = px.bar(
             resultados_df, 
-            x='Modelo', 
-            y=['RMSE Entrenamiento', 'RMSE Prueba'],
-            title='Comparación de RMSE por Modelo',
+            x=textos['modelo'], 
+            y=[textos['rmse_entrenamiento'], textos['rmse_prueba']],
+            title=textos['comparacion_rmse_modelos'],
             barmode='group'
         )
         fig2.update_layout(xaxis_tickangle=-45)
         st.plotly_chart(fig2, use_container_width=True)
         
         # Plots de dispersión predicción vs. real para los mejores modelos
-        st.subheader("🎯 Predicciones vs Valores Reales (Mejores Modelos)")
+        st.subheader(f"🎯 {textos['predicciones_vs_valores_reales_titulo']}")
         
-        top_3_modelos = resultados_df.nlargest(3, 'R² Prueba')['Modelo'].tolist()
+        top_3_modelos = resultados_df.nlargest(3, textos['r2_prueba'])[textos['modelo']].tolist()
         
         fig = make_subplots(
             rows=1, cols=len(top_3_modelos),
@@ -567,9 +567,9 @@ class PredictorRendimientoDeportivo:
                 row=1, col=i+1
             )
         
-        fig.update_xaxes(title_text="Valores Reales")
-        fig.update_yaxes(title_text="Predicciones")
-        fig.update_layout(height=400, title_text="Predicciones vs Valores Reales")
+        fig.update_xaxes(title_text=textos['valores_reales'])
+        fig.update_yaxes(title_text=textos['predicciones'])
+        fig.update_layout(height=400, title_text=textos['predicciones_vs_valores_reales'])
         
         st.plotly_chart(fig, use_container_width=True)
         
@@ -577,10 +577,12 @@ class PredictorRendimientoDeportivo:
     
     def pruebas_estadisticas(self):
         """Realizar pruebas estadísticas robustas"""
-        st.subheader("🧪 Pruebas Estadísticas Robustas")
+        textos = obtener_textos()
+
+        st.subheader(f"🧪 {textos['pruebas_estadisticas_robustas']}")
         
         if not self.resultados:
-            st.error("❌ No hay resultados de modelos disponibles.")
+            st.error(f"❌ {textos['evaluacion_no_resultados_modelos']}")
             return
         
         # Recopilar predicciones de todos los modelos
@@ -589,7 +591,7 @@ class PredictorRendimientoDeportivo:
             predicciones_dict[nombre] = resultado['predictions_test']
         
         # Prueba de normalidad de residuos
-        st.subheader("🔍 Pruebas de Normalidad de Residuos")
+        st.subheader(f"🔍 {textos['pruebas_normalidad_residuos']}")
         
         resultados_normalidad = []
         for nombre, predicciones in predicciones_dict.items():
@@ -599,17 +601,17 @@ class PredictorRendimientoDeportivo:
             stat, p_valor = shapiro(residuos)
             
             resultados_normalidad.append({
-                'Modelo': nombre,
-                'Estadístico Shapiro-Wilk': stat,
-                'p-valor': p_valor,
-                'Normalidad': 'Sí' if p_valor > 0.05 else 'No'
+                textos['modelo']: nombre,
+                textos['estadistico_shapiro']: stat,
+                textos['p_valor']: p_valor,
+                textos['normalidad_titulo']: 'Sí' if p_valor > 0.05 else 'No'
             })
         
         normalidad_df = pd.DataFrame(resultados_normalidad)
         st.dataframe(normalidad_df, use_container_width=True)
         
         # Prueba de homocedasticidad (prueba de Levene)
-        st.subheader("🔍 Prueba de Homoscedasticidad (Levene)")
+        st.subheader(f"🔍 {textos['prueba_homoscedasticidad']}")
         
         lista_residuales = []
         etiquetas_modelo = []
@@ -622,12 +624,12 @@ class PredictorRendimientoDeportivo:
         if len(lista_residuales) > 1:
             levene_stat, levene_p = levene(*lista_residuales)
             
-            st.write(f"**Estadístico de Levene:** {levene_stat:.4f}")
-            st.write(f"**p-valor:** {levene_p:.4f}")
-            st.write(f"**Interpretación:** {'Varianzas homogéneas' if levene_p > 0.05 else 'Varianzas heterogéneas'}")
+            st.write(f"**{textos['estadistico_levene']}:** {levene_stat:.4f}")
+            st.write(f"**{textos['p_valor']}:** {levene_p:.4f}")
+            st.write(f"**{textos['interpretacion']}:** {textos['varianzas_homogeneas'] if levene_p > 0.05 else textos['varianzas_heterogeneas']}")
         
         # Comparación Estadísticas de Modelos (ANOVA o Kruskal-Wallis)
-        st.subheader("📊 Comparación Estadística de Modelos")
+        st.subheader(f"📊 {textos['comparacion_estadistica_modelos']}")
         
         # Uso de las puntuaciones R² para la comparación
         r2_puntuacion = [resultado['cv_mean'] for resultado in self.resultados.values()]
@@ -646,15 +648,15 @@ class PredictorRendimientoDeportivo:
         if len(cv_puntuaciones_por_modelo) > 2:
             kruskal_stat, kruskal_p = kruskal(*cv_puntuaciones_por_modelo)
             
-            st.write(f"**Prueba de Kruskal-Wallis:**")
-            st.write(f"Estadístico: {kruskal_stat:.4f}")
-            st.write(f"p-valor: {kruskal_p:.4f}")
+            st.write(f"**{textos['prueba_kruskal_wallis']}:**")
+            st.write(f"{textos['estadistico_kruskal']}: {kruskal_stat:.4f}")
+            st.write(f"{textos['p_valor']}: {kruskal_p:.4f}")
             
             if kruskal_p < 0.05:
-                st.write("✅ **Conclusión:** Existen diferencias significativas entre los modelos")
+                st.write(f"✅ {textos['conclusion_prueba_kruskal']}")
                 
                 # Analisis Post-hoc
-                st.subheader("🔬 Análisis Post-hoc")
+                st.subheader(f"🔬 {textos['analisis_post_hoc']}")
                 try:
                     # Preparar datos para la prueba post-hoc
                     todas_puntuaciones = np.concatenate(cv_puntuaciones_por_modelo)
@@ -671,22 +673,22 @@ class PredictorRendimientoDeportivo:
                     posthoc_resultados = sp.posthoc_dunn(posthoc_df, val_col='scores', 
                                                     group_col='models', p_adjust='bonferroni')
                     
-                    st.write("**Comparaciones post-hoc (Dunn's test con corrección Bonferroni):**")
+                    st.write(f"{textos['comparaciones_post_hoc']}")
                     st.dataframe(posthoc_resultados, use_container_width=True)
                     
                 except Exception as e:
-                    st.write(f"No se pudo realizar el análisis post-hoc: {str(e)}")
+                    st.write(f"{textos['error_comparacion_post_hoc']} No se pudo realizar el análisis post-hoc: {str(e)}")
             else:
-                st.write("❌ **Conclusión:** No hay diferencias significativas entre los modelos")
+                st.write(f"❌ {textos['no_conclusion_prueba_kruskal']}")
     
     def generar_reporte_pdf(self, nombre_mejor_modelo, resultados_df):
         """Generar un informe PDF completo"""
 
         textos= obtener_textos()
 
-        st.subheader(f"📄 {textos['generar_reporte_titulo']}")
+        st.subheader(f"📄 Generar Reporte en PDF")
         
-        if st.button(f"🔄 {textos['generar_reporte_pdf']}"):
+        if st.button(f"🔄 Generar Reporte PDF"):
             try:
                 # Crear PDF en memoria
                 buffer = io.BytesIO()
@@ -881,8 +883,8 @@ class PredictorRendimientoDeportivo:
                 • Escalado: StandardScaler para modelos sensibles a escala<br/><br/>
                 
                 <b>Modelos evaluados:</b><br/>
-                • Algoritmos tradicionales: Linear Regression, Random Forest, Gradient Boosting<br/>
-                • Algoritmos avanzados: SVR, Neural Networks<br/>
+                • Algoritmos tradicionales: Regresión Linear, Bosque Aleatorio, Potenciación del Gradiente<br/>
+                • Algoritmos avanzados: SVR, Redes Neuronales<br/>
                 • Modelos híbridos: Ensemble methods con VotingRegressor<br/><br/>
                 
                 <b>Métricas de evaluación:</b><br/>
@@ -1138,13 +1140,13 @@ def main():
     ### 📚 {textos['informacion_adicional']}
     
     **{textos['algoritmos_implementados']}**
-    - Linear Regression
-    - Random Forest
-    - Gradient Boosting
-    - Support Vector Regression (SVR)
-    - Neural Networks (MLP)
-    - {textos['hibrido']} 1: Random Forest + Gradient Boosting
-    - {textos['hibrido']} 2: Random Forest + SVR + Neural Network
+    - Regresión Lineal (Linear Regression)
+    - Bosque Aleatorio (Random Forest)
+    - Potenciación del Gradiente (Gradient Boosting)
+    - Regresión de Vectores de Soporte (Support Vector Regression) - SVR
+    - Redes Neuronales (Neural Networks) - MLP
+    - {textos['hibrido']} 1: Bosque Aleatorio + Potenciación del Gradiente
+    - {textos['hibrido']} 2: Bosque Aleatorio + SVR + Red Neuronal
     
     **{textos['metricas_evaluacion']}**
     - R² ({textos['coeficiente_determinacion']})
